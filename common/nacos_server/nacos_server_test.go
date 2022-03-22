@@ -19,7 +19,7 @@ package nacos_server
 import (
 	"testing"
 
-	"github.com/nacos-group/nacos-sdk-go/common/constant"
+	"github.com/wubin1989/nacos-sdk-go/common/constant"
 	"github.com/stretchr/testify/assert"
 )
 

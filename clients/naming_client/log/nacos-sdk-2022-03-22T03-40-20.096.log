@@ -1,0 +1,21 @@
+2022-03-22T11:40:20.095+0800	[31mERROR[0m	naming_client/push_receiver.go:66	error listening :55743,err:listen udp :55743: socket: too many open files
+2022-03-22T11:40:20.095+0800	[31mERROR[0m	naming_client/push_receiver.go:66	error listening :55833,err:listen udp :55833: socket: too many open files
+2022-03-22T11:40:20.095+0800	[31mERROR[0m	naming_client/beat_reactor.go:112	beat to server return error:server list is empty
+2022-03-22T11:40:20.095+0800	[31mERROR[0m	naming_client/push_receiver.go:66	error listening :55178,err:listen udp :55178: socket: too many open files
+2022-03-22T11:40:20.095+0800	[31mERROR[0m	naming_client/beat_reactor.go:112	beat to server return error:server list is empty
+2022-03-22T11:40:20.095+0800	[31mERROR[0m	naming_client/push_receiver.go:84	failed to start udp server after trying 3 times.
+2022-03-22T11:40:20.095+0800	[34mINFO[0m	naming_client/naming_proxy.go:103	namespaceId:<> sending beat to server:<{"ip":"127.0.0.2","port":8080,"weight":1,"serviceName":"public@@Test","cluster":"default","metadata":{},"scheduled":false}>
+2022-03-22T11:40:20.095+0800	[34mINFO[0m	naming_client/naming_proxy.go:103	namespaceId:<> sending beat to server:<{"ip":"127.0.0.1","port":8080,"weight":1,"serviceName":"public@@Test","cluster":"default","metadata":{},"scheduled":false}>
+2022-03-22T11:40:20.095+0800	[34mINFO[0m	naming_client/beat_reactor.go:83	remove beat: test_group@@DEMO6@10.0.0.10:80 from beat map
+2022-03-22T11:40:20.095+0800	[34mINFO[0m	naming_client/naming_proxy.go:73	deregister instance namespaceId:<>,serviceName:<test_group@@DEMO6> with instance:<10.0.0.10:80@>
+2022-03-22T11:40:20.095+0800	[31mERROR[0m	naming_client/beat_reactor.go:112	beat to server return error:server list is empty
+2022-03-22T11:40:20.095+0800	[31mERROR[0m	naming_client/beat_reactor.go:112	beat to server return error:server list is empty
+2022-03-22T11:40:20.095+0800	[34mINFO[0m	naming_client/naming_proxy.go:103	namespaceId:<> sending beat to server:<{"ip":"127.0.0.2","port":8080,"weight":1,"serviceName":"public@@Test","cluster":"default","metadata":{},"scheduled":false}>
+2022-03-22T11:40:20.095+0800	[34mINFO[0m	naming_client/naming_proxy.go:103	namespaceId:<> sending beat to server:<{"ip":"127.0.0.1","port":8080,"weight":1,"serviceName":"public@@Test","cluster":"default","metadata":{},"scheduled":false}>
+2022-03-22T11:40:20.095+0800	[31mERROR[0m	naming_client/beat_reactor.go:112	beat to server return error:server list is empty
+2022-03-22T11:40:20.095+0800	[31mERROR[0m	naming_client/beat_reactor.go:112	beat to server return error:server list is empty
+2022-03-22T11:40:20.095+0800	[34mINFO[0m	naming_client/naming_proxy.go:103	namespaceId:<> sending beat to server:<{"ip":"127.0.0.2","port":8080,"weight":1,"serviceName":"public@@Test","cluster":"default","metadata":{},"scheduled":false}>
+2022-03-22T11:40:20.095+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</Users/wubin1989/workspace/cloud/nacos-sdk-go/clients/naming_client/log>   cacheDir:</Users/wubin1989/workspace/cloud/nacos-sdk-go/clients/naming_client/cache>
+2022-03-22T11:40:20.095+0800	[31mERROR[0m	naming_client/beat_reactor.go:112	beat to server return error:server list is empty
+2022-03-22T11:40:20.095+0800	[34mINFO[0m	naming_client/naming_proxy.go:103	namespaceId:<> sending beat to server:<{"ip":"127.0.0.1","port":8080,"weight":1,"serviceName":"public@@Test","cluster":"default","metadata":{},"scheduled":false}>
+2022-03-22T11:40:20.096+0800	[34mINFO[0m	naming_client/naming_proxy.go:103	namespaceId:<> sending beat to server:<{"ip":"127.0.0.2","port":8080,"weight":1,"serviceName":"public@@Test","cluster":"default","metadata":{},"scheduled":false}>

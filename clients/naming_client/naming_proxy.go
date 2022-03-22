@@ -24,12 +24,12 @@ import (
 
 	"github.com/buger/jsonparser"
 
-	"github.com/nacos-group/nacos-sdk-go/common/constant"
-	"github.com/nacos-group/nacos-sdk-go/common/http_agent"
-	"github.com/nacos-group/nacos-sdk-go/common/logger"
-	"github.com/nacos-group/nacos-sdk-go/common/nacos_server"
-	"github.com/nacos-group/nacos-sdk-go/model"
-	"github.com/nacos-group/nacos-sdk-go/util"
+	"github.com/wubin1989/nacos-sdk-go/common/constant"
+	"github.com/wubin1989/nacos-sdk-go/common/http_agent"
+	"github.com/wubin1989/nacos-sdk-go/common/logger"
+	"github.com/wubin1989/nacos-sdk-go/common/nacos_server"
+	"github.com/wubin1989/nacos-sdk-go/model"
+	"github.com/wubin1989/nacos-sdk-go/util"
 )
 
 type NamingProxy struct {

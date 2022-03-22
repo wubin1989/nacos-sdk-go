@@ -20,7 +20,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/nacos-group/nacos-sdk-go/common/file"
+	"github.com/wubin1989/nacos-sdk-go/common/file"
 )
 
 func NewClientConfig(opts ...ClientOption) *ClientConfig {

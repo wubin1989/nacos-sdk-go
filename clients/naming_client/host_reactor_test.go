@@ -22,15 +22,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nacos-group/nacos-sdk-go/common/logger"
+	"github.com/wubin1989/nacos-sdk-go/common/logger"
 
-	"github.com/nacos-group/nacos-sdk-go/model"
+	"github.com/wubin1989/nacos-sdk-go/model"
 
-	"github.com/nacos-group/nacos-sdk-go/clients/nacos_client"
-	"github.com/nacos-group/nacos-sdk-go/common/constant"
-	"github.com/nacos-group/nacos-sdk-go/common/http_agent"
-	"github.com/nacos-group/nacos-sdk-go/util"
-	"github.com/nacos-group/nacos-sdk-go/vo"
+	"github.com/wubin1989/nacos-sdk-go/clients/nacos_client"
+	"github.com/wubin1989/nacos-sdk-go/common/constant"
+	"github.com/wubin1989/nacos-sdk-go/common/http_agent"
+	"github.com/wubin1989/nacos-sdk-go/util"
+	"github.com/wubin1989/nacos-sdk-go/vo"
 	"github.com/stretchr/testify/assert"
 )
 

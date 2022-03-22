@@ -28,15 +28,15 @@ import (
 	"time"
 
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/kms"
-	"github.com/nacos-group/nacos-sdk-go/clients/cache"
-	"github.com/nacos-group/nacos-sdk-go/clients/nacos_client"
-	"github.com/nacos-group/nacos-sdk-go/common/constant"
-	"github.com/nacos-group/nacos-sdk-go/common/http_agent"
-	"github.com/nacos-group/nacos-sdk-go/common/logger"
-	"github.com/nacos-group/nacos-sdk-go/common/nacos_error"
-	"github.com/nacos-group/nacos-sdk-go/model"
-	"github.com/nacos-group/nacos-sdk-go/util"
-	"github.com/nacos-group/nacos-sdk-go/vo"
+	"github.com/wubin1989/nacos-sdk-go/clients/cache"
+	"github.com/wubin1989/nacos-sdk-go/clients/nacos_client"
+	"github.com/wubin1989/nacos-sdk-go/common/constant"
+	"github.com/wubin1989/nacos-sdk-go/common/http_agent"
+	"github.com/wubin1989/nacos-sdk-go/common/logger"
+	"github.com/wubin1989/nacos-sdk-go/common/nacos_error"
+	"github.com/wubin1989/nacos-sdk-go/model"
+	"github.com/wubin1989/nacos-sdk-go/util"
+	"github.com/wubin1989/nacos-sdk-go/vo"
 )
 
 type ConfigClient struct {
@@ -438,6 +438,7 @@ func (client *ConfigClient) callListener(changed, tenant string) {
 		if len(attrs) >= 2 {
 			if value, ok := client.cacheMap.Get(util.GetConfigCacheKey(attrs[0], attrs[1], tenant)); ok {
 				cData := value.(cacheData)
+				old := cData.content
 				content, err := client.getConfigInner(vo.ConfigParam{
 					DataId: cData.dataId,
 					Group:  cData.group,
@@ -449,7 +450,7 @@ func (client *ConfigClient) callListener(changed, tenant string) {
 				cData.content = content
 				cData.md5 = util.Md5(content)
 				if cData.md5 != cData.cacheDataListener.lastMd5 {
-					go cData.cacheDataListener.listener(tenant, attrs[1], attrs[0], cData.content)
+					go cData.cacheDataListener.listener(tenant, attrs[1], attrs[0], cData.content, old)
 					cData.cacheDataListener.lastMd5 = cData.md5
 					client.cacheMap.Set(util.GetConfigCacheKey(cData.dataId, cData.group, tenant), cData)
 				}

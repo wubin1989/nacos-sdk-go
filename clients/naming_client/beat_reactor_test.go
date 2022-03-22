@@ -19,10 +19,10 @@ package naming_client
 import (
 	"testing"
 
-	"github.com/nacos-group/nacos-sdk-go/common/nacos_server"
+	"github.com/wubin1989/nacos-sdk-go/common/nacos_server"
 
-	"github.com/nacos-group/nacos-sdk-go/model"
-	"github.com/nacos-group/nacos-sdk-go/util"
+	"github.com/wubin1989/nacos-sdk-go/model"
+	"github.com/wubin1989/nacos-sdk-go/util"
 	"github.com/stretchr/testify/assert"
 )
 

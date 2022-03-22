@@ -20,9 +20,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/nacos-group/nacos-sdk-go/clients"
-	"github.com/nacos-group/nacos-sdk-go/common/constant"
-	"github.com/nacos-group/nacos-sdk-go/vo"
+	"github.com/wubin1989/nacos-sdk-go/clients"
+	"github.com/wubin1989/nacos-sdk-go/common/constant"
+	"github.com/wubin1989/nacos-sdk-go/vo"
 )
 
 func main() {
@@ -98,7 +98,7 @@ func main() {
 	err = client.ListenConfig(vo.ConfigParam{
 		DataId: "test-data",
 		Group:  "test-group",
-		OnChange: func(namespace, group, dataId, data string) {
+		OnChange: func(namespace, group, dataId, data, old string) {
 			fmt.Println("config changed group:" + group + ", dataId:" + dataId + ", content:" + data)
 		},
 	})
@@ -106,7 +106,7 @@ func main() {
 	err = client.ListenConfig(vo.ConfigParam{
 		DataId: "test-data-2",
 		Group:  "test-group",
-		OnChange: func(namespace, group, dataId, data string) {
+		OnChange: func(namespace, group, dataId, data, old string) {
 			fmt.Println("config changed group:" + group + ", dataId:" + dataId + ", content:" + data)
 		},
 	})

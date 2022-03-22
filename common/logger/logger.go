@@ -21,7 +21,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/nacos-group/nacos-sdk-go/common/constant"
+	"github.com/wubin1989/nacos-sdk-go/common/constant"
 
 	"gopkg.in/natefinch/lumberjack.v2"
 

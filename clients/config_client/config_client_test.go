@@ -25,13 +25,13 @@ import (
 	"time"
 
 	"github.com/golang/mock/gomock"
-	"github.com/nacos-group/nacos-sdk-go/clients/cache"
-	"github.com/nacos-group/nacos-sdk-go/clients/nacos_client"
-	"github.com/nacos-group/nacos-sdk-go/common/constant"
-	"github.com/nacos-group/nacos-sdk-go/common/http_agent"
-	"github.com/nacos-group/nacos-sdk-go/mock"
-	"github.com/nacos-group/nacos-sdk-go/util"
-	"github.com/nacos-group/nacos-sdk-go/vo"
+	"github.com/wubin1989/nacos-sdk-go/clients/cache"
+	"github.com/wubin1989/nacos-sdk-go/clients/nacos_client"
+	"github.com/wubin1989/nacos-sdk-go/common/constant"
+	"github.com/wubin1989/nacos-sdk-go/common/http_agent"
+	"github.com/wubin1989/nacos-sdk-go/mock"
+	"github.com/wubin1989/nacos-sdk-go/util"
+	"github.com/wubin1989/nacos-sdk-go/vo"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -435,7 +435,7 @@ func TestListen(t *testing.T) {
 			err = client.ListenConfig(vo.ConfigParam{
 				DataId: localConfigTest.DataId,
 				Group:  localConfigTest.Group,
-				OnChange: func(namespace, group, dataId, data string) {
+				OnChange: func(namespace, group, dataId, data, old string) {
 					ch <- data
 				},
 			})
@@ -462,7 +462,7 @@ func TestListen(t *testing.T) {
 	t.Run("TestListenConfigNoDataId", func(t *testing.T) {
 		listenConfigParam := vo.ConfigParam{
 			Group: "gateway",
-			OnChange: func(namespace, group, dataId, data string) {
+			OnChange: func(namespace, group, dataId, data, old string) {
 			},
 		}
 		client := createConfigClientTest()
@@ -482,7 +482,7 @@ func TestListen(t *testing.T) {
 			err = client.ListenConfig(vo.ConfigParam{
 				DataId: configNoChangeKey,
 				Group:  localConfigTest.Group,
-				OnChange: func(namespace, group, dataId, data string) {
+				OnChange: func(namespace, group, dataId, data, old string) {
 					content = "data"
 				},
 			})
@@ -506,7 +506,7 @@ func TestListen(t *testing.T) {
 		listenConfigParam := vo.ConfigParam{
 			DataId: multipleClientsKey,
 			Group:  localConfigTest.Group,
-			OnChange: func(namespace, group, dataId, data string) {
+			OnChange: func(namespace, group, dataId, data, old string) {
 				ch <- data
 			},
 		}
@@ -539,7 +539,7 @@ func TestListen(t *testing.T) {
 		listenConfigParam := vo.ConfigParam{
 			DataId: multipleClientsMultipleConfigsKey,
 			Group:  localConfigTest.Group,
-			OnChange: func(namespace, group, dataId, data string) {
+			OnChange: func(namespace, group, dataId, data, old string) {
 				ch <- data
 			},
 		}
@@ -579,14 +579,14 @@ func TestCancelListenConfig(t *testing.T) {
 		listenConfigParam := vo.ConfigParam{
 			DataId: cancelOneKey,
 			Group:  "group",
-			OnChange: func(namespace, group, dataId, data string) {
+			OnChange: func(namespace, group, dataId, data, old string) {
 			},
 		}
 
 		listenConfigParam1 := vo.ConfigParam{
 			DataId: cancelOne1Key,
 			Group:  "group1",
-			OnChange: func(namespace, group, dataId, data string) {
+			OnChange: func(namespace, group, dataId, data, old string) {
 				context = data
 			},
 		}
@@ -633,7 +633,7 @@ func TestCancelListenConfig(t *testing.T) {
 		listenConfigParam := vo.ConfigParam{
 			DataId: cancelListenConfigKey,
 			Group:  localConfigTest.Group,
-			OnChange: func(namespace, group, dataId, data string) {
+			OnChange: func(namespace, group, dataId, data, old string) {
 				context = data
 				ch <- data
 			},

@@ -27,7 +27,7 @@ const (
 	YAML       ConfigType = "yaml"
 )
 
-type Listener func(namespace, group, dataId, data string)
+type Listener func(namespace, group, dataId, data, old string)
 
 type ConfigParam struct {
 	DataId  string     `param:"dataId"`  //required
@@ -36,7 +36,7 @@ type ConfigParam struct {
 	DatumId string     `param:"datumId"`
 	Type    ConfigType `param:"type"`
 
-	OnChange func(namespace, group, dataId, data string)
+	OnChange func(namespace, group, dataId, data, old string)
 }
 
 type SearchConfigParam struct {
