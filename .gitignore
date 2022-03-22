@@ -1,3 +1,6 @@
 .idea
 .data
 clients/config_client/cache
+clients/naming_client/cache
+clients/config_client/log
+clients/naming_client/log
