@@ -17,6 +17,7 @@
 package logger
 
 import (
+	"io"
 	"os"
 	"sync"
 	"time"
@@ -45,6 +46,7 @@ type Config struct {
 	Level            string
 	Sampling         *SamplingConfig
 	LogRollingConfig *lumberjack.Logger
+	LogDiscard       bool
 }
 
 type SamplingConfig struct {
@@ -91,7 +93,8 @@ func init() {
 
 func BuildLoggerConfig(clientConfig constant.ClientConfig) Config {
 	loggerConfig := Config{
-		Level: clientConfig.LogLevel,
+		Level:      clientConfig.LogLevel,
+		LogDiscard: clientConfig.LogDiscard,
 	}
 	if clientConfig.LogSampling != nil {
 		loggerConfig.Sampling = &SamplingConfig{
@@ -127,7 +130,13 @@ func InitNacosLogger(config Config) (Logger, error) {
 	logLevel := getLogLevel(config.Level)
 	encoder := getEncoder()
 	writer := config.getLogWriter()
-	core := zapcore.NewCore(zapcore.NewConsoleEncoder(encoder), zapcore.NewMultiWriteSyncer(writer, zapcore.AddSync(os.Stdout)), logLevel)
+	var ws zapcore.WriteSyncer
+	if config.LogDiscard {
+		ws = zapcore.AddSync(io.Discard)
+	} else {
+		ws = zapcore.NewMultiWriteSyncer(writer, zapcore.AddSync(os.Stdout))
+	}
+	core := zapcore.NewCore(zapcore.NewConsoleEncoder(encoder), ws, logLevel)
 
 	if config.Sampling != nil {
 		core = zapcore.NewSamplerWithOptions(core, config.Sampling.Tick, config.Sampling.Initial, config.Sampling.Thereafter)
