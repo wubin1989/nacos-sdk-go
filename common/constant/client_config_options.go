@@ -171,3 +171,10 @@ func WithLogRollingConfig(rollingConfig *ClientLogRollingConfig) ClientOption {
 		config.LogRollingConfig = rollingConfig
 	}
 }
+
+// WithLogDiscard ...
+func WithLogDiscard(logDiscard bool) ClientOption {
+	return func(config *ClientConfig) {
+		config.LogDiscard = logDiscard
+	}
+}
