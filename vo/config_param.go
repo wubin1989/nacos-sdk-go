@@ -30,11 +30,16 @@ const (
 type Listener func(namespace, group, dataId, data, old string)
 
 type ConfigParam struct {
-	DataId  string     `param:"dataId"`  //required
-	Group   string     `param:"group"`   //required
-	Content string     `param:"content"` //required
-	DatumId string     `param:"datumId"`
-	Type    ConfigType `param:"type"`
+	DataId           string     `param:"dataId"`  //required
+	Group            string     `param:"group"`   //required
+	Content          string     `param:"content"` //required
+	DatumId          string     `param:"datumId"`
+	Type             ConfigType `param:"type"`
+	Tag              string     `param:"tag"`
+	AppName          string     `param:"appName"`
+	BetaIps          string     `param:"betaIps"`
+	CasMd5           string     `param:"casMd5"`
+	EncryptedDataKey string     `param:"encryptedDataKey"`
 
 	OnChange func(namespace, group, dataId, data, old string)
 }

@@ -19,8 +19,8 @@ package nacos_server
 import (
 	"testing"
 
-	"github.com/wubin1989/nacos-sdk-go/common/constant"
 	"github.com/stretchr/testify/assert"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/constant"
 )
 
 func Test_getAddressWithScheme(t *testing.T) {

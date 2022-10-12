@@ -20,11 +20,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/wubin1989/nacos-sdk-go/util"
+	"github.com/wubin1989/nacos-sdk-go/v2/util"
 )
 
-func post(path string, header http.Header, timeoutMs uint64, params map[string]string) (response *http.Response, err error) {
-	client := http.Client{}
+func post(client *http.Client, path string, header http.Header, timeoutMs uint64, params map[string]string) (response *http.Response, err error) {
 	client.Timeout = time.Millisecond * time.Duration(timeoutMs)
 
 	body := util.GetUrlFormedMap(params)

@@ -17,8 +17,8 @@
 package security
 
 import (
+	"context"
 	"encoding/json"
-	"errors"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -26,9 +26,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/wubin1989/nacos-sdk-go/common/constant"
-	"github.com/wubin1989/nacos-sdk-go/common/http_agent"
-	"github.com/wubin1989/nacos-sdk-go/common/logger"
+	"github.com/pkg/errors"
+
+	"github.com/wubin1989/nacos-sdk-go/v2/common/constant"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/http_agent"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/logger"
 )
 
 type AuthClient struct {
@@ -50,7 +52,6 @@ func NewAuthClient(clientCfg constant.ClientConfig, serverCfgs []constant.Server
 		serverCfgs:  serverCfgs,
 		clientCfg:   clientCfg,
 		agent:       agent,
-		tokenTtl:    5, // default refresh token 5 second, if first login error
 		accessToken: &atomic.Value{},
 	}
 
@@ -65,7 +66,7 @@ func (ac *AuthClient) GetAccessToken() string {
 	return v.(string)
 }
 
-func (ac *AuthClient) AutoRefresh() {
+func (ac *AuthClient) AutoRefresh(ctx context.Context) {
 
 	// If the username is not set, the automatic refresh Token is not enabled
 
@@ -75,7 +76,7 @@ func (ac *AuthClient) AutoRefresh() {
 
 	go func() {
 		timer := time.NewTimer(time.Second * time.Duration(ac.tokenTtl-ac.tokenRefreshWindow))
-
+		defer timer.Stop()
 		for {
 			select {
 			case <-timer.C:
@@ -84,6 +85,8 @@ func (ac *AuthClient) AutoRefresh() {
 					logger.Errorf("login has error %+v", err)
 				}
 				timer.Reset(time.Second * time.Duration(ac.tokenTtl-ac.tokenRefreshWindow))
+			case <-ctx.Done():
+				return
 			}
 		}
 	}()
@@ -138,7 +141,7 @@ func (ac *AuthClient) login(server constant.ServerConfig) (bool, error) {
 			return false, err
 		}
 
-		if resp.StatusCode != 200 {
+		if resp.StatusCode != constant.RESPONSE_CODE_SUCCESS {
 			errMsg := string(bytes)
 			return false, errors.New(errMsg)
 		}

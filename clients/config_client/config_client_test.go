@@ -18,21 +18,24 @@ package config_client
 
 import (
 	"errors"
-	"net/http"
+	"github.com/golang/mock/gomock"
+	"github.com/wubin1989/nacos-sdk-go/v2/clients/cache"
+	"github.com/wubin1989/nacos-sdk-go/v2/mock"
 	"runtime"
-	"strconv"
 	"testing"
+
 	"time"
 
-	"github.com/golang/mock/gomock"
-	"github.com/wubin1989/nacos-sdk-go/clients/cache"
-	"github.com/wubin1989/nacos-sdk-go/clients/nacos_client"
-	"github.com/wubin1989/nacos-sdk-go/common/constant"
-	"github.com/wubin1989/nacos-sdk-go/common/http_agent"
-	"github.com/wubin1989/nacos-sdk-go/mock"
-	"github.com/wubin1989/nacos-sdk-go/util"
-	"github.com/wubin1989/nacos-sdk-go/vo"
 	"github.com/stretchr/testify/assert"
+	"github.com/wubin1989/nacos-sdk-go/v2/util"
+
+	"github.com/wubin1989/nacos-sdk-go/v2/clients/nacos_client"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/constant"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/http_agent"
+	"github.com/wubin1989/nacos-sdk-go/v2/vo"
+
+	"net/http"
+	"strconv"
 )
 
 var goVersion = runtime.Version()

@@ -29,7 +29,7 @@ func reset() {
 
 func TestInitLogger(t *testing.T) {
 	config := Config{
-		Level: "debug",
+		Level: "degug",
 	}
 	err := InitLogger(config)
 	assert.NoError(t, err)
@@ -40,7 +40,7 @@ func TestGetLogger(t *testing.T) {
 	// not yet init get default log
 	log := GetLogger()
 	config := Config{
-		Level: "debug",
+		Level: "degug",
 	}
 	_ = InitLogger(config)
 	// after init logger
@@ -91,7 +91,7 @@ func TestRaceLogger(t *testing.T) {
 		go func() {
 			defer wg.Done()
 			config := Config{
-				Level: "debug",
+				Level: "degug",
 			}
 			_ = InitLogger(config)
 		}()

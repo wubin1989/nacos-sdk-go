@@ -17,17 +17,14 @@
 package logger
 
 import (
+	"github.com/wubin1989/nacos-sdk-go/v2/common/constant"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+	"gopkg.in/natefinch/lumberjack.v2"
 	"io"
 	"os"
 	"sync"
 	"time"
-
-	"github.com/wubin1989/nacos-sdk-go/common/constant"
-
-	"gopkg.in/natefinch/lumberjack.v2"
-
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 )
 
 var (

@@ -17,8 +17,8 @@
 package config_client
 
 import (
-	"errors"
 	"fmt"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/http_agent"
 	"math"
 	"net/url"
 	"os"
@@ -27,16 +27,17 @@ import (
 	"sync"
 	"time"
 
+	"github.com/pkg/errors"
+
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/kms"
-	"github.com/wubin1989/nacos-sdk-go/clients/cache"
-	"github.com/wubin1989/nacos-sdk-go/clients/nacos_client"
-	"github.com/wubin1989/nacos-sdk-go/common/constant"
-	"github.com/wubin1989/nacos-sdk-go/common/http_agent"
-	"github.com/wubin1989/nacos-sdk-go/common/logger"
-	"github.com/wubin1989/nacos-sdk-go/common/nacos_error"
-	"github.com/wubin1989/nacos-sdk-go/model"
-	"github.com/wubin1989/nacos-sdk-go/util"
-	"github.com/wubin1989/nacos-sdk-go/vo"
+	"github.com/wubin1989/nacos-sdk-go/v2/clients/cache"
+	"github.com/wubin1989/nacos-sdk-go/v2/clients/nacos_client"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/constant"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/logger"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/nacos_error"
+	"github.com/wubin1989/nacos-sdk-go/v2/model"
+	"github.com/wubin1989/nacos-sdk-go/v2/util"
+	"github.com/wubin1989/nacos-sdk-go/v2/vo"
 )
 
 type ConfigClient struct {

@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package naming_client
+package naming_http
 
 import (
 	"bytes"
 	"compress/gzip"
+	"context"
 	"encoding/json"
 	"io/ioutil"
 	"math/rand"
@@ -26,14 +27,16 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/wubin1989/nacos-sdk-go/common/logger"
-	"github.com/wubin1989/nacos-sdk-go/util"
+	"github.com/wubin1989/nacos-sdk-go/v2/clients/naming_client/naming_cache"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/logger"
+	"github.com/wubin1989/nacos-sdk-go/v2/util"
 )
 
 type PushReceiver struct {
-	port        int
-	host        string
-	hostReactor *HostReactor
+	ctx               context.Context
+	port              int
+	host              string
+	serviceInfoHolder *naming_cache.ServiceInfoHolder
 }
 
 type PushData struct {
@@ -46,11 +49,11 @@ var (
 	GZIP_MAGIC = []byte("\x1F\x8B")
 )
 
-func NewPushReceiver(hostReactor *HostReactor) *PushReceiver {
+func NewPushReceiver(ctx context.Context, serviceInfoHolder *naming_cache.ServiceInfoHolder) *PushReceiver {
 	pr := PushReceiver{
-		hostReactor: hostReactor,
+		ctx:               ctx,
+		serviceInfoHolder: serviceInfoHolder,
 	}
-	pr.startServer()
 	return &pr
 }
 
@@ -70,46 +73,46 @@ func (us *PushReceiver) tryListen() (*net.UDPConn, bool) {
 	return conn, true
 }
 
-func (us *PushReceiver) getConn() *net.UDPConn {
+func (us *PushReceiver) startServer() {
+	var (
+		conn *net.UDPConn
+		ok   bool
+	)
+
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	for i := 0; i < 3; i++ {
-		r := rand.New(rand.NewSource(time.Now().UnixNano()))
 		port := r.Intn(1000) + 54951
 		us.port = port
-		conn, ok := us.tryListen()
+		conn, ok = us.tryListen()
+
 		if ok {
 			logger.Infof("udp server start, port: " + strconv.Itoa(port))
-			return conn
+			break
 		}
+
 		if !ok && i == 2 {
 			logger.Errorf("failed to start udp server after trying 3 times.")
 		}
 	}
-	return nil
-}
 
-func (us *PushReceiver) startServer() {
-	conn := us.getConn()
 	if conn == nil {
 		return
 	}
+
 	go func() {
 		defer conn.Close()
 		for {
-			us.handleClient(conn)
+			select {
+			case <-us.ctx.Done():
+				return
+			default:
+				us.handleClient(conn)
+			}
 		}
 	}()
 }
 
 func (us *PushReceiver) handleClient(conn *net.UDPConn) {
-
-	if conn == nil {
-		time.Sleep(time.Second * 5)
-		conn = us.getConn()
-		if conn == nil {
-			return
-		}
-	}
-
 	data := make([]byte, 4024)
 	n, remoteAddr, err := conn.ReadFromUDP(data)
 	if err != nil {
@@ -129,7 +132,7 @@ func (us *PushReceiver) handleClient(conn *net.UDPConn) {
 	ack := make(map[string]string)
 
 	if pushData.PushType == "dom" || pushData.PushType == "service" {
-		us.hostReactor.ProcessServiceJson(pushData.Data)
+		us.serviceInfoHolder.ProcessServiceJson(pushData.Data)
 
 		ack["type"] = "push-ack"
 		ack["lastRefTime"] = strconv.FormatInt(pushData.LastRefTime, 10)
@@ -138,7 +141,7 @@ func (us *PushReceiver) handleClient(conn *net.UDPConn) {
 	} else if pushData.PushType == "dump" {
 		ack["type"] = "dump-ack"
 		ack["lastRefTime"] = strconv.FormatInt(pushData.LastRefTime, 10)
-		ack["data"] = util.ToJsonString(us.hostReactor.serviceInfoMap)
+		ack["data"] = util.ToJsonString(us.serviceInfoHolder.ServiceInfoMap)
 	} else {
 		ack["type"] = "unknow-ack"
 		ack["lastRefTime"] = strconv.FormatInt(pushData.LastRefTime, 10)

@@ -20,7 +20,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/wubin1989/nacos-sdk-go/common/file"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/file"
 )
 
 func NewClientConfig(opts ...ClientOption) *ClientConfig {
@@ -50,6 +50,13 @@ type ClientOption func(*ClientConfig)
 func WithTimeoutMs(timeoutMs uint64) ClientOption {
 	return func(config *ClientConfig) {
 		config.TimeoutMs = timeoutMs
+	}
+}
+
+// WithAppName ...
+func WithAppName(appName string) ClientOption {
+	return func(config *ClientConfig) {
+		config.AppName = appName
 	}
 }
 
@@ -176,5 +183,11 @@ func WithLogRollingConfig(rollingConfig *ClientLogRollingConfig) ClientOption {
 func WithLogDiscard(logDiscard bool) ClientOption {
 	return func(config *ClientConfig) {
 		config.LogDiscard = logDiscard
+	}
+}
+
+func WithTLS(tlsCfg TLSConfig) ClientOption {
+	return func(config *ClientConfig) {
+		config.TLSCfg = tlsCfg
 	}
 }

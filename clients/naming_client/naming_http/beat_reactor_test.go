@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 
-package naming_client
+package naming_http
 
 import (
+	"context"
 	"testing"
 
-	"github.com/wubin1989/nacos-sdk-go/common/nacos_server"
-
-	"github.com/wubin1989/nacos-sdk-go/model"
-	"github.com/wubin1989/nacos-sdk-go/util"
 	"github.com/stretchr/testify/assert"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/constant"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/nacos_server"
+	"github.com/wubin1989/nacos-sdk-go/v2/model"
+	"github.com/wubin1989/nacos-sdk-go/v2/util"
 )
 
 func TestBeatReactor_AddBeatInfo(t *testing.T) {
-	br := NewBeatReactor(NamingProxy{nacosServer: &nacos_server.NacosServer{}}, 5000)
+	br := NewBeatReactor(context.Background(), constant.ClientConfig{}, &nacos_server.NacosServer{})
 	serviceName := "Test"
 	groupName := "public"
 	beatInfo := &model.BeatInfo{
@@ -46,7 +47,7 @@ func TestBeatReactor_AddBeatInfo(t *testing.T) {
 }
 
 func TestBeatReactor_RemoveBeatInfo(t *testing.T) {
-	br := NewBeatReactor(NamingProxy{nacosServer: &nacos_server.NacosServer{}}, 5000)
+	br := NewBeatReactor(context.Background(), constant.ClientConfig{}, &nacos_server.NacosServer{})
 	serviceName := "Test"
 	groupName := "public"
 	beatInfo1 := &model.BeatInfo{

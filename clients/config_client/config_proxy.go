@@ -17,19 +17,21 @@
 package config_client
 
 import (
+	"context"
 	"encoding/json"
-	"errors"
 	"net/http"
 	"strconv"
 	"strings"
 
-	"github.com/wubin1989/nacos-sdk-go/common/constant"
-	"github.com/wubin1989/nacos-sdk-go/common/http_agent"
-	"github.com/wubin1989/nacos-sdk-go/common/logger"
-	"github.com/wubin1989/nacos-sdk-go/common/nacos_server"
-	"github.com/wubin1989/nacos-sdk-go/model"
-	"github.com/wubin1989/nacos-sdk-go/util"
-	"github.com/wubin1989/nacos-sdk-go/vo"
+	"github.com/pkg/errors"
+
+	"github.com/wubin1989/nacos-sdk-go/v2/common/constant"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/http_agent"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/logger"
+	"github.com/wubin1989/nacos-sdk-go/v2/common/nacos_server"
+	"github.com/wubin1989/nacos-sdk-go/v2/model"
+	"github.com/wubin1989/nacos-sdk-go/v2/util"
+	"github.com/wubin1989/nacos-sdk-go/v2/vo"
 )
 
 type ConfigProxy struct {
@@ -40,10 +42,9 @@ type ConfigProxy struct {
 func NewConfigProxy(serverConfig []constant.ServerConfig, clientConfig constant.ClientConfig, httpAgent http_agent.IHttpAgent) (ConfigProxy, error) {
 	proxy := ConfigProxy{}
 	var err error
-	proxy.nacosServer, err = nacos_server.NewNacosServer(serverConfig, clientConfig, httpAgent, clientConfig.TimeoutMs, clientConfig.Endpoint)
+	proxy.nacosServer, err = nacos_server.NewNacosServer(context.Background(), serverConfig, clientConfig, httpAgent, clientConfig.TimeoutMs, clientConfig.Endpoint)
 	proxy.clientConfig = clientConfig
 	return proxy, err
-
 }
 
 func (cp *ConfigProxy) GetServerList() []constant.ServerConfig {
