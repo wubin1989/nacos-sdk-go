@@ -17,6 +17,7 @@
 package file
 
 import (
+	"github.com/pkg/errors"
 	"log"
 	"os"
 	"path/filepath"
@@ -57,6 +58,7 @@ func MkdirIfNecessary(createDir string) (err error) {
 		if _, e := os.Stat(d); os.IsNotExist(e) {
 			err = os.Mkdir(d, os.ModePerm) //在当前目录下生成md目录
 			if err != nil {
+				err = errors.Wrapf(err, "mkdir %s failed", d)
 				break
 			}
 		}

@@ -38,7 +38,7 @@ func GetFileName(cacheKey string, cacheDir string) string {
 func WriteServicesToFile(service *model.Service, cacheKey, cacheDir string) {
 	err := file.MkdirIfNecessary(cacheDir)
 	if err != nil {
-		logger.Errorf("mkdir cacheDir failed,cacheDir:%s,err:", cacheDir, err)
+		logger.Errorf("mkdir cacheDir failed,cacheDir:%s,err:%#v", cacheDir, err)
 		return
 	}
 	bytes, _ := json.Marshal(service)
